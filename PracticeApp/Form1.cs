@@ -1,76 +1,99 @@
+using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using System.Net.NetworkInformation;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using OpenWeatherMap;
+using OpenWeatherMap.Models;
+using Microsoft.Extensions.Logging;
+using static GMap.NET.Entity.OpenStreetMapGraphHopperGeocodeEntity;
 
 namespace PracticeApp
 {
     public partial class Form1 : Form
     {
+        private OpenWeatherMapService openWeatherMapService;
+        private bool apiChecked = false;
+
         public Form1()
         {
+
             InitializeComponent();
-            pictureBox.Paint += pictureBox_Paint;
-            pictureBox.MouseMove += pictureBox_MouseMove;
+            gMapControl1.MapProvider = GMapProviders.GoogleMap;
+
+            // Установка начального положения карты
+            gMapControl1.Position = new PointLatLng(0, 0);
+
+            // Настройка отображения карты
+            gMapControl1.MinZoom = 2;
+            gMapControl1.MaxZoom = 18;
+            gMapControl1.Zoom = 2;
+
+            gMapControl1.ShowCenter = true;
+
+            // Создание экземпляра OpenWeatherMapService
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddConsole();
+            });
+            var logger = loggerFactory.CreateLogger<OpenWeatherMapService>();
+            var openWeatherMapConfiguration = new OpenWeatherMapConfiguration
+            {
+                ApiEndpoint = "https://api.openweathermap.org",
+                ApiKey = "ffc8252ec80ac9b92fce652adb34888e",
+                UnitSystem = "metric",
+                Language = "en"
+            };
+            openWeatherMapService = new OpenWeatherMapService(logger, openWeatherMapConfiguration);
         }
 
-        private void pictureBox_Paint(object sender, PaintEventArgs e)
+        private async void gMapControl1_OnPositionChanged(PointLatLng point)
         {
-            Graphics g = e.Graphics;
-
-            // Загрузите изображение полной карты Земли из ресурсов
-            Image earthImage = Properties.Resources.WorldMap;
-
-            // Отрисуйте изображение на PictureBox
-            g.DrawImage(earthImage, 0, 0, pictureBox.Width, pictureBox.Height);
-
-            // Настройте параметры сетки
-            int gridSize = 100; // Размер сетки (пиксели)
-            Color gridColor = Color.FromArgb(90, Color.Gray); // Цвет и прозрачность линий сетки
-
-            using (Pen gridPen = new Pen(gridColor))
+            label3.Text = $"{point.Lat:F2}";
+            label4.Text = $"{point.Lng:F2}";
+            if (apiChecked) // Проверяем, что API уже было проверено
             {
-                // Рисуйте вертикальные линии сетки
-                for (int x = 0; x < pictureBox.Width; x += gridSize)
-                {
-                    g.DrawLine(gridPen, x, 0, x, pictureBox.Height);
-                }
+                await Task.Delay(2000);
 
-                // Рисуйте горизонтальные линии сетки
-                for (int y = 0; y < pictureBox.Height; y += gridSize)
-                {
-                    g.DrawLine(gridPen, 0, y, pictureBox.Width, y);
-                }
+                var weatherInfo = await openWeatherMapService.GetCurrentWeatherAsync(point.Lat, point.Lng);
+
+                // Отображение температуры в Label
+                label2.Text = $"{weatherInfo.Main.Temperature}°C";
             }
-            e.Dispose();
-        }
-       private void pictureBox_MouseMove(object sender, MouseEventArgs e)
-            {
-                // Географические координаты углов изображения
-                double topLeftLatitude = 51.0; // Широта верхнего левого угла изображения
-                double topLeftLongitude = -0.5; // Долгота верхнего левого угла изображения
-                double bottomRightLatitude = 50.0; // Широта нижнего правого угла изображения
-                double bottomRightLongitude = 1.0; // Долгота нижнего правого угла изображения
 
-                // Размеры изображения в пикселях
-                int imageWidth = pictureBox.Width;
-                int imageHeight = pictureBox.Height;
-
-                // Получение позиции курсора в пикселях относительно верхнего левого угла изображения
-                int cursorX = e.X;
-                int cursorY = e.Y;
-
-                // Вычисление процентов относительно ширины и высоты изображения
-                double percentX = (double)cursorX / imageWidth;
-                double percentY = (double)cursorY / imageHeight;
-
-                // Вычисление широты и долготы на основе процентов
-                double latitude = topLeftLatitude + percentY * (bottomRightLatitude - topLeftLatitude);
-                double longitude = topLeftLongitude + percentX * (bottomRightLongitude - topLeftLongitude);
-
-                // Отображение координат в метках или других элементах управления
-                label2.Text = "Широта: " + latitude.ToString();
-                label3.Text = "Долгота: " + longitude.ToString();
-            }
 
         }
 
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            if (!IsNetworkAvailable())
+            {
+                MessageBox.Show("Отсутствует сетевое подключение. Проверьте свое интернет-соединение и попробуйте снова.");
+                return;
+            }
+
+            try
+            {
+                var weatherInfo = await openWeatherMapService.GetCurrentWeatherAsync(0, 0);
+                MessageBox.Show($"API работает. Текущая температура: {weatherInfo.Main.Temperature}°C");
+
+                apiChecked = true; // Устанавливаем флаг проверки API в true
+            }
+            catch (HttpRequestException ex)
+            {
+                MessageBox.Show($"Ошибка при обращении к API: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка: {ex.Message}");
+            }
+        }
+
+        private bool IsNetworkAvailable()
+        {
+            return NetworkInterface.GetIsNetworkAvailable();
+        }
     }
+}
