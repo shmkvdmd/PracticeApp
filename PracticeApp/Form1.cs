@@ -53,22 +53,22 @@ namespace PracticeApp
             timer.Interval = 30;
             timer.Tick += Timer_Tick;
         }
-
+        
         private async void gMapControl1_OnPositionChanged(PointLatLng point)
         {
             label3.Text = $"{point.Lat:F2}";
             label4.Text = $"{point.Lng:F2}";
 
-            currentPoint = point; // Сохраняем текущую позицию карты
+            currentPoint = point; // сохраняем текущую позицию карты
 
-            if (apiChecked) // Проверяем, что API уже было проверено
+            if (apiChecked) // проверка, что API уже было проверено
             {
-                progressBar1.Value = 0; // Сбрасываем состояние ProgressBar
-                timer.Start(); // Запускаем таймер для обновления ProgressBar
+                progressBar1.Value = 0;
+                timer.Start();
                 label2.Text = "";
             }
         }
-
+        // метод для обращения к API спустя интервал
         private async void Timer_Tick(object sender, EventArgs e)
         {
             progressBar1.Value += 25;
@@ -92,7 +92,6 @@ namespace PracticeApp
                 }
             }
         }
-
         private async void button1_Click(object sender, EventArgs e)
         {
             if (!IsNetworkAvailable())
@@ -165,7 +164,7 @@ namespace PracticeApp
                 pictureBox1.Visible = true;
             }
         }
-
+        // два валидатора для проверки ввода широты и долготы
         private bool ValidateLatitude()
         {
             if (double.TryParse(textBox1.Text, out double latitude))
