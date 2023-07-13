@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             panel = new Panel();
             gMapControl1 = new GMap.NET.WindowsForms.GMapControl();
             label1 = new Label();
@@ -35,18 +36,26 @@
             label3 = new Label();
             label4 = new Label();
             button1 = new Button();
+            pictureBox1 = new PictureBox();
+            label5 = new Label();
+            textBox1 = new TextBox();
+            textBox2 = new TextBox();
+            label6 = new Label();
+            label7 = new Label();
+            progressBar1 = new ProgressBar();
+            button2 = new Button();
+            label8 = new Label();
+            label9 = new Label();
             panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel
             // 
-            panel.AutoScroll = true;
+            resources.ApplyResources(panel, "panel");
             panel.BorderStyle = BorderStyle.FixedSingle;
             panel.Controls.Add(gMapControl1);
-            panel.Location = new Point(259, 12);
             panel.Name = "panel";
-            panel.Size = new Size(682, 423);
-            panel.TabIndex = 4;
             // 
             // gMapControl1
             // 
@@ -56,7 +65,7 @@
             gMapControl1.GrayScaleMode = false;
             gMapControl1.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
             gMapControl1.LevelsKeepInMemory = 5;
-            gMapControl1.Location = new Point(3, 3);
+            resources.ApplyResources(gMapControl1, "gMapControl1");
             gMapControl1.MarkersEnabled = true;
             gMapControl1.MaxZoom = 2;
             gMapControl1.MinZoom = 2;
@@ -70,67 +79,116 @@
             gMapControl1.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
             gMapControl1.SelectedAreaFillColor = Color.FromArgb(33, 65, 105, 225);
             gMapControl1.ShowTileGridLines = false;
-            gMapControl1.Size = new Size(672, 411);
-            gMapControl1.TabIndex = 0;
             gMapControl1.Zoom = 0D;
             gMapControl1.OnPositionChanged += gMapControl1_OnPositionChanged;
             // 
             // label1
             // 
-            label1.AutoSize = true;
-            label1.BorderStyle = BorderStyle.FixedSingle;
-            label1.Font = new Font("Arial Narrow", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(12, 50);
+            resources.ApplyResources(label1, "label1");
+            label1.BorderStyle = BorderStyle.Fixed3D;
             label1.Name = "label1";
-            label1.Size = new Size(116, 25);
-            label1.TabIndex = 5;
-            label1.Text = "Температура";
             // 
             // label2
             // 
-            label2.AutoSize = true;
+            resources.ApplyResources(label2, "label2");
             label2.BorderStyle = BorderStyle.Fixed3D;
-            label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point);
-            label2.Location = new Point(153, 50);
             label2.Name = "label2";
-            label2.Size = new Size(2, 27);
-            label2.TabIndex = 6;
             // 
             // label3
             // 
-            label3.AutoSize = true;
+            resources.ApplyResources(label3, "label3");
             label3.BorderStyle = BorderStyle.Fixed3D;
-            label3.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label3.Location = new Point(12, 9);
             label3.Name = "label3";
-            label3.Size = new Size(2, 32);
-            label3.TabIndex = 7;
             // 
             // label4
             // 
-            label4.AutoSize = true;
+            resources.ApplyResources(label4, "label4");
             label4.BorderStyle = BorderStyle.Fixed3D;
-            label4.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point);
-            label4.Location = new Point(88, 9);
             label4.Name = "label4";
-            label4.Size = new Size(2, 32);
-            label4.TabIndex = 8;
             // 
             // button1
             // 
-            button1.Location = new Point(80, 118);
+            button1.BackgroundImage = Properties.Resources.check;
+            resources.ApplyResources(button1, "button1");
             button1.Name = "button1";
-            button1.Size = new Size(48, 40);
-            button1.TabIndex = 9;
-            button1.Text = "button1";
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.BackgroundImage = Properties.Resources.haveconnection;
+            resources.ApplyResources(pictureBox1, "pictureBox1");
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.TabStop = false;
+            // 
+            // label5
+            // 
+            resources.ApplyResources(label5, "label5");
+            label5.BorderStyle = BorderStyle.Fixed3D;
+            label5.Name = "label5";
+            // 
+            // textBox1
+            // 
+            resources.ApplyResources(textBox1, "textBox1");
+            textBox1.Name = "textBox1";
+            // 
+            // textBox2
+            // 
+            resources.ApplyResources(textBox2, "textBox2");
+            textBox2.Name = "textBox2";
+            // 
+            // label6
+            // 
+            resources.ApplyResources(label6, "label6");
+            label6.Name = "label6";
+            // 
+            // label7
+            // 
+            resources.ApplyResources(label7, "label7");
+            label7.Name = "label7";
+            // 
+            // progressBar1
+            // 
+            progressBar1.BackColor = SystemColors.Control;
+            progressBar1.Cursor = Cursors.No;
+            progressBar1.ForeColor = SystemColors.MenuHighlight;
+            resources.ApplyResources(progressBar1, "progressBar1");
+            progressBar1.Maximum = 2000;
+            progressBar1.Name = "progressBar1";
+            progressBar1.Step = 1;
+            progressBar1.Style = ProgressBarStyle.Continuous;
+            // 
+            // button2
+            // 
+            resources.ApplyResources(button2, "button2");
+            button2.Name = "button2";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // label8
+            // 
+            resources.ApplyResources(label8, "label8");
+            label8.Name = "label8";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(label9, "label9");
+            label9.Name = "label9";
+            // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(949, 441);
+            Controls.Add(label9);
+            Controls.Add(label8);
+            Controls.Add(button2);
+            Controls.Add(progressBar1);
+            Controls.Add(label7);
+            Controls.Add(label6);
+            Controls.Add(textBox2);
+            Controls.Add(textBox1);
+            Controls.Add(label5);
+            Controls.Add(pictureBox1);
             Controls.Add(button1);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -138,8 +196,8 @@
             Controls.Add(label1);
             Controls.Add(panel);
             Name = "Form1";
-            Text = "Информ";
             panel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -152,5 +210,15 @@
         private Label label3;
         private Label label4;
         private Button button1;
+        private PictureBox pictureBox1;
+        private Label label5;
+        private TextBox textBox1;
+        private TextBox textBox2;
+        private Label label6;
+        private Label label7;
+        private ProgressBar progressBar1;
+        private Button button2;
+        private Label label8;
+        private Label label9;
     }
 }
