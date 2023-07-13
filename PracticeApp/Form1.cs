@@ -24,7 +24,7 @@ namespace PracticeApp
             InitializeComponent();
             gMapControl1.MapProvider = GMapProviders.GoogleMap;
 
-            // Установка начального положения карты
+            // Установка начального положения карты в центре
             gMapControl1.Position = new PointLatLng(0, 0);
 
             // Настройка отображения карты
@@ -34,7 +34,6 @@ namespace PracticeApp
 
             gMapControl1.ShowCenter = true;
 
-            // Создание экземпляра OpenWeatherMapService
             var loggerFactory = LoggerFactory.Create(builder =>
             {
                 builder.AddConsole();
@@ -51,7 +50,7 @@ namespace PracticeApp
 
 
             timer = new System.Windows.Forms.Timer();
-            timer.Interval = 30; // Установите нужный интервал
+            timer.Interval = 30;
             timer.Tick += Timer_Tick;
         }
 
@@ -72,18 +71,15 @@ namespace PracticeApp
 
         private async void Timer_Tick(object sender, EventArgs e)
         {
-            progressBar1.Value += 25; // Увеличиваем значение прогресса
+            progressBar1.Value += 25;
 
             if (progressBar1.Value >= progressBar1.Maximum)
             {
-                timer.Stop(); // Останавливаем таймер
+                timer.Stop();
 
                 try
                 {
-                    // Выполняем запрос к API OpenWeatherMap
                     var weatherInfo = await openWeatherMapService.GetCurrentWeatherAsync(currentPoint.Lat, currentPoint.Lng);
-
-                    // Отображение температуры в Label
                     label2.Text = $"{weatherInfo.Main.Temperature}";
                 }
                 catch (Exception ex)
@@ -92,7 +88,7 @@ namespace PracticeApp
                 }
                 finally
                 {
-                    progressBar1.Value = 0; // Сбрасываем состояние ProgressBar
+                    progressBar1.Value = 0;
                 }
             }
         }
@@ -110,7 +106,7 @@ namespace PracticeApp
                 var weatherInfo = await openWeatherMapService.GetCurrentWeatherAsync(0, 0);
                 MessageBox.Show($"API работает. Текущая температура: {weatherInfo.Main.Temperature}");
 
-                apiChecked = true; // Устанавливаем флаг проверки API в true
+                apiChecked = true;
 
                 pictureBox1.BackgroundImage = Properties.Resources.haveconnection;
                 pictureBox1.Visible = true;
@@ -142,8 +138,6 @@ namespace PracticeApp
                 MessageBox.Show("Сначала проверьте состояние.");
                 return;
             }
-
-            // Проверка введенных значений широты и долготы
             if (!ValidateLatitude() || !ValidateLongitude())
             {
                 return;
@@ -176,7 +170,6 @@ namespace PracticeApp
         {
             if (double.TryParse(textBox1.Text, out double latitude))
             {
-                // Проверяем, что значение широты находится в допустимом диапазоне
                 if (latitude < -85.05 || latitude > 85.05)
                 {
                     MessageBox.Show("Значение широты должно быть в диапазоне от -85.05 до 85.05.");
@@ -199,7 +192,6 @@ namespace PracticeApp
         {
             if (double.TryParse(textBox2.Text, out double longitude))
             {
-                // Проверяем, что значение долготы находится в допустимом диапазоне
                 if (longitude < -180 || longitude > 180)
                 {
                     MessageBox.Show("Значение долготы должно быть в диапазоне от -180 до 180.");
