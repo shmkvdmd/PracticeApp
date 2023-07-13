@@ -1,4 +1,4 @@
-using System.Drawing;
+п»їusing System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Net.NetworkInformation;
@@ -24,10 +24,10 @@ namespace PracticeApp
             InitializeComponent();
             gMapControl1.MapProvider = GMapProviders.GoogleMap;
 
-            // Установка начального положения карты в центре
+            // РЈСЃС‚Р°РЅРѕРІРєР° РЅР°С‡Р°Р»СЊРЅРѕРіРѕ РїРѕР»РѕР¶РµРЅРёСЏ РєР°СЂС‚С‹ РІ С†РµРЅС‚СЂРµ
             gMapControl1.Position = new PointLatLng(0, 0);
 
-            // Настройка отображения карты
+            // РќР°СЃС‚СЂРѕР№РєР° РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ РєР°СЂС‚С‹
             gMapControl1.MinZoom = 2;
             gMapControl1.MaxZoom = 18;
             gMapControl1.Zoom = 2;
@@ -59,12 +59,12 @@ namespace PracticeApp
             label3.Text = $"{point.Lat:F2}";
             label4.Text = $"{point.Lng:F2}";
 
-            currentPoint = point; // Сохраняем текущую позицию карты
+            currentPoint = point; // РЎРѕС…СЂР°РЅСЏРµРј С‚РµРєСѓС‰СѓСЋ РїРѕР·РёС†РёСЋ РєР°СЂС‚С‹
 
-            if (apiChecked) // Проверяем, что API уже было проверено
+            if (apiChecked) // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ API СѓР¶Рµ Р±С‹Р»Рѕ РїСЂРѕРІРµСЂРµРЅРѕ
             {
-                progressBar1.Value = 0; // Сбрасываем состояние ProgressBar
-                timer.Start(); // Запускаем таймер для обновления ProgressBar
+                progressBar1.Value = 0; // РЎР±СЂР°СЃС‹РІР°РµРј СЃРѕСЃС‚РѕСЏРЅРёРµ ProgressBar
+                timer.Start(); // Р—Р°РїСѓСЃРєР°РµРј С‚Р°Р№РјРµСЂ РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ ProgressBar
                 label2.Text = "";
             }
         }
@@ -84,7 +84,7 @@ namespace PracticeApp
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Произошла ошибка при выполнении запроса: {ex.Message}");
+                    MessageBox.Show($"РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР°: {ex.Message}");
                 }
                 finally
                 {
@@ -97,14 +97,14 @@ namespace PracticeApp
         {
             if (!IsNetworkAvailable())
             {
-                MessageBox.Show("Отсутствует сетевое подключение. Проверьте свое интернет-соединение и попробуйте снова.");
+                MessageBox.Show("РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ СЃРµС‚РµРІРѕРµ РїРѕРґРєР»СЋС‡РµРЅРёРµ. РџСЂРѕРІРµСЂСЊС‚Рµ СЃРІРѕРµ РёРЅС‚РµСЂРЅРµС‚-СЃРѕРµРґРёРЅРµРЅРёРµ Рё РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.");
                 return;
             }
 
             try
             {
                 var weatherInfo = await openWeatherMapService.GetCurrentWeatherAsync(0, 0);
-                MessageBox.Show($"API работает. Текущая температура: {weatherInfo.Main.Temperature}");
+                MessageBox.Show($"API СЂР°Р±РѕС‚Р°РµС‚. РўРµРєСѓС‰Р°СЏ С‚РµРјРїРµСЂР°С‚СѓСЂР°: {weatherInfo.Main.Temperature}");
 
                 apiChecked = true;
 
@@ -113,14 +113,14 @@ namespace PracticeApp
             }
             catch (HttpRequestException ex)
             {
-                MessageBox.Show($"Ошибка при обращении к API: {ex.Message}");
+                MessageBox.Show($"РћС€РёР±РєР° РїСЂРё РѕР±СЂР°С‰РµРЅРёРё Рє API: {ex.Message}");
 
                 pictureBox1.BackgroundImage = Properties.Resources.noconnection;
                 pictureBox1.Visible = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Произошла ошибка: {ex.Message}");
+                MessageBox.Show($"РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°: {ex.Message}");
                 pictureBox1.BackgroundImage = Properties.Resources.noconnection;
                 pictureBox1.Visible = true;
             }
@@ -135,7 +135,7 @@ namespace PracticeApp
         {
             if (!apiChecked)
             {
-                MessageBox.Show("Сначала проверьте состояние.");
+                MessageBox.Show("РЎРЅР°С‡Р°Р»Р° РїСЂРѕРІРµСЂСЊС‚Рµ СЃРѕСЃС‚РѕСЏРЅРёРµ.");
                 return;
             }
             if (!ValidateLatitude() || !ValidateLongitude())
@@ -153,14 +153,14 @@ namespace PracticeApp
             }
             catch (HttpRequestException ex)
             {
-                MessageBox.Show($"Ошибка при обращении к API: {ex.Message}");
+                MessageBox.Show($"РћС€РёР±РєР° РїСЂРё РѕР±СЂР°С‰РµРЅРёРё Рє API: {ex.Message}");
 
                 pictureBox1.BackgroundImage = Properties.Resources.noconnection;
                 pictureBox1.Visible = true;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Произошла ошибка: {ex.Message}");
+                MessageBox.Show($"РџСЂРѕРёР·РѕС€Р»Р° РѕС€РёР±РєР°: {ex.Message}");
                 pictureBox1.BackgroundImage = Properties.Resources.noconnection;
                 pictureBox1.Visible = true;
             }
@@ -172,7 +172,7 @@ namespace PracticeApp
             {
                 if (latitude < -85.05 || latitude > 85.05)
                 {
-                    MessageBox.Show("Значение широты должно быть в диапазоне от -85.05 до 85.05.");
+                    MessageBox.Show("Р—РЅР°С‡РµРЅРёРµ С€РёСЂРѕС‚С‹ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІ РґРёР°РїР°Р·РѕРЅРµ РѕС‚ -85.05 РґРѕ 85.05.");
                     textBox1.Focus();
                     textBox1.SelectAll();
                     return false;
@@ -180,7 +180,7 @@ namespace PracticeApp
             }
             else
             {
-                MessageBox.Show("Введите корректное значение широты.");
+                MessageBox.Show("Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ С€РёСЂРѕС‚С‹.");
                 textBox1.Focus();
                 textBox1.SelectAll();
                 return false;
@@ -194,7 +194,7 @@ namespace PracticeApp
             {
                 if (longitude < -180 || longitude > 180)
                 {
-                    MessageBox.Show("Значение долготы должно быть в диапазоне от -180 до 180.");
+                    MessageBox.Show("Р—РЅР°С‡РµРЅРёРµ РґРѕР»РіРѕС‚С‹ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІ РґРёР°РїР°Р·РѕРЅРµ РѕС‚ -180 РґРѕ 180.");
                     textBox2.Focus();
                     textBox2.SelectAll();
                     return false;
@@ -202,7 +202,7 @@ namespace PracticeApp
             }
             else
             {
-                MessageBox.Show("Введите корректное значение долготы.");
+                MessageBox.Show("Р’РІРµРґРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РґРѕР»РіРѕС‚С‹.");
                 textBox2.Focus();
                 textBox2.SelectAll();
                 return false;
