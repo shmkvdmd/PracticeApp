@@ -179,7 +179,6 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Image = Properties.Resources.dream;
             resources.ApplyResources(pictureBox2, "pictureBox2");
             pictureBox2.Name = "pictureBox2";
             pictureBox2.TabStop = false;
