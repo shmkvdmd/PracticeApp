@@ -53,7 +53,7 @@ namespace PracticeApp
             timer.Interval = 30;
             timer.Tick += Timer_Tick;
         }
-        
+
         private async void gMapControl1_OnPositionChanged(PointLatLng point)
         {
             label3.Text = $"{point.Lat:F2}";

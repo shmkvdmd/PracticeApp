@@ -46,8 +46,10 @@
             button2 = new Button();
             label8 = new Label();
             label9 = new Label();
+            pictureBox2 = new PictureBox();
             panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
             // 
             // panel
@@ -175,10 +177,18 @@
             resources.ApplyResources(label9, "label9");
             label9.Name = "label9";
             // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = Properties.Resources.dream;
+            resources.ApplyResources(pictureBox2, "pictureBox2");
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.TabStop = false;
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(pictureBox2);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(button2);
@@ -198,6 +208,7 @@
             Name = "Form1";
             panel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -220,5 +231,6 @@
         private Button button2;
         private Label label8;
         private Label label9;
+        private PictureBox pictureBox2;
     }
 }
